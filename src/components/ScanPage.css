@@ -1,0 +1,365 @@
+.scan-page {
+  padding: 32px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #8a94a6;
+}
+
+.no-qr-notice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  background: rgba(239, 68, 68, 0.05) !important;
+  border: 1px solid rgba(239, 68, 68, 0.15) !important;
+}
+
+.no-qr-notice p {
+  font-size: 14px;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+/* ── Result Card ── */
+.result-card {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.result-card.success {
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+
+.result-card.failure {
+  border-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+.result-icon {
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.result-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.result-message {
+  font-size: 15px;
+  color: #6b7280;
+}
+
+.result-sub {
+  font-size: 13px;
+  color: #9ca3af;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 6px 16px;
+  border-radius: 8px;
+}
+
+/* ── Scan Layout ── */
+.scan-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.camera-card,
+.manual-card {
+  padding: 28px;
+}
+
+.scan-auth-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(79, 142, 247, 0.08);
+  border: 1px solid rgba(79, 142, 247, 0.18);
+  border-radius: 12px;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.scan-details-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1f2937;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.token-pill {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #1a1a2e;
+}
+
+.auto-status {
+  font-size: 12px;
+  color: #6b7280;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.section-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+
+.section-sub {
+  font-size: 13px;
+  color: #8a94a6;
+  margin-bottom: 20px;
+}
+
+/* QR Reader box — html5-qrcode renders into this div */
+.qr-reader-box {
+  width: 100%;
+  min-height: 260px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.03);
+  border: 2px dashed rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+/* Override html5-qrcode internal styles */
+#qr-reader video {
+  border-radius: 10px;
+}
+
+#qr-reader__scan_region {
+  border-radius: 10px;
+}
+
+.camera-error {
+  font-size: 13px;
+  color: #ef4444;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  background: rgba(239, 68, 68, 0.06);
+  border-radius: 8px;
+}
+
+.camera-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.scanned-token {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(16, 185, 129, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.scanned-label {
+  font-size: 12px;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.scanned-value {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1a1a2e;
+  letter-spacing: 2px;
+  font-family: 'Courier New', monospace;
+}
+
+/* ── Scan Form ── */
+.scan-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap select {
+  width: 100%;
+  padding: 11px 36px 11px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  color: #1a1a2e;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.select-wrap select.placeholder {
+  color: #b0b8c4;
+}
+
+.select-wrap select:focus {
+  border-color: rgba(79, 142, 247, 0.5);
+}
+
+.select-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.token-input {
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #1a1a2e;
+  outline: none;
+  text-transform: uppercase;
+  font-family: 'Courier New', monospace;
+  transition: border-color 0.15s;
+}
+
+.token-input:focus {
+  border-color: rgba(79, 142, 247, 0.5);
+}
+
+.token-input::placeholder {
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #b0b8c4;
+  font-family: inherit;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ── Shared Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #4f8ef7 0%, #2563eb 100%);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-primary.full-width {
+  width: 100%;
+  justify-content: center;
+  padding: 12px;
+  font-size: 15px;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+@media (max-width: 768px) {
+  .scan-layout {
+    grid-template-columns: 1fr;
+  }
+}
