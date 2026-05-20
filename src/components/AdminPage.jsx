@@ -4,7 +4,7 @@ import {
   ShieldCheck, RefreshCw, QrCode, LogOut, Copy, Check,
   Users, UserPlus, Trash2, User, Mail, Building2, CalendarDays,
   GraduationCap, Download, CheckCircle2, ClipboardList, Plus, X,
-  Clock3, Circle,
+  Clock3, Circle, Filter,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import GlassCard from './GlassCard';
@@ -583,6 +583,133 @@ function AttendanceTablePanel() {
     </GlassCard>
   );
 }
+
+// ── Date-wise Attendance Pivot Table ─────────────────────────────────────────
+
+const STATUS_BADGE = {
+  present: { label: 'P', color: '#10b981', bg: 'rgba(16,185,129,0.12)' },
+  absent:  { label: 'A', color: '#ef4444', bg: 'rgba(239,68,68,0.12)'  },
+  leave:   { label: 'L', color: '#6366f1', bg: 'rgba(99,102,241,0.12)' },
+};
+
+function DateWiseAttendancePanel() {
+  const { interns, attendance, getAttendanceDates } = useApp();
+  const allDates = getAttendanceDates(); // sorted desc
+
+  const today = new Date().toISOString().split('T')[0];
+  const thirtyDaysAgo = new Date(Date.now() - 29 * 86400000).toISOString().split('T')[0];
+  const [fromDate, setFromDate] = useState(thirtyDaysAgo);
+  const [toDate, setToDate]   = useState(today);
+
+  const filteredDates = allDates.filter((d) => d >= fromDate && d <= toDate);
+
+  function formatDisplayDate(dateStr) {
+    const [y, m, day] = dateStr.split('-');
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${day} ${months[parseInt(m,10)-1]} ${y}`;
+  }
+
+  return (
+    <GlassCard className="datewise-panel admin-full-row">
+      <div className="section-heading">
+        <div className="section-heading-icon"><CalendarDays size={18} /></div>
+        <div>
+          <h2 className="section-title">Date-wise Attendance</h2>
+          <p className="section-sub">Day-by-day attendance view for all interns</p>
+        </div>
+      </div>
+
+      {/* Filters */}
+      <div className="datewise-filters">
+        <Filter size={14} />
+        <label>From</label>
+        <input type="date" value={fromDate} max={toDate} onChange={(e) => setFromDate(e.target.value)} className="datewise-date-input" />
+        <label>To</label>
+        <input type="date" value={toDate}   min={fromDate} max={today} onChange={(e) => setToDate(e.target.value)} className="datewise-date-input" />
+        <span className="datewise-count">{filteredDates.length} day{filteredDates.length !== 1 ? 's' : ''}</span>
+      </div>
+
+      {interns.length === 0 ? (
+        <div className="panel-empty" style={{ padding: '30px', textAlign: 'center' }}>
+          <p style={{ color: '#6b7280', fontSize: '14px' }}>No interns registered yet.</p>
+        </div>
+      ) : filteredDates.length === 0 ? (
+        <div className="panel-empty" style={{ padding: '30px', textAlign: 'center' }}>
+          <CalendarDays size={32} color="#d1d5db" />
+          <p style={{ color: '#6b7280', fontSize: '14px', marginTop: '8px' }}>No attendance records in this range.</p>
+        </div>
+      ) : (
+        <div style={{ overflowX: 'auto', marginTop: '16px' }}>
+          <table className="datewise-table">
+            <thead>
+              <tr>
+                <th className="datewise-th-date">Date</th>
+                {interns.map((intern) => (
+                  <th key={intern.id} className="datewise-th-intern" title={intern.name}>
+                    <div className="datewise-intern-avatar">{intern.name.charAt(0).toUpperCase()}</div>
+                    <span className="datewise-intern-name">{intern.name.split(' ')[0]}</span>
+                  </th>
+                ))}
+                <th className="datewise-th-summary">Present</th>
+                <th className="datewise-th-summary">Absent</th>
+                <th className="datewise-th-summary">Leave</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredDates.map((date) => {
+                const dayRecords = attendance[date] || {};
+                let presentCount = 0, absentCount = 0, leaveCount = 0;
+                interns.forEach((i) => {
+                  const s = dayRecords[i.id];
+                  if (s === 'present') presentCount++;
+                  else if (s === 'absent')  absentCount++;
+                  else if (s === 'leave')   leaveCount++;
+                });
+                return (
+                  <tr key={date} className="datewise-row">
+                    <td className="datewise-td-date">{formatDisplayDate(date)}</td>
+                    {interns.map((intern) => {
+                      const status = dayRecords[intern.id] || null;
+                      const badge = status ? STATUS_BADGE[status] : null;
+                      return (
+                        <td key={intern.id} className="datewise-td-status">
+                          {badge ? (
+                            <span className="datewise-badge" style={{ color: badge.color, background: badge.bg }}>
+                              {badge.label}
+                            </span>
+                          ) : (
+                            <span className="datewise-badge datewise-badge-none">—</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                    <td className="datewise-td-count present-count">{presentCount || '—'}</td>
+                    <td className="datewise-td-count absent-count">{absentCount  || '—'}</td>
+                    <td className="datewise-td-count leave-count">{leaveCount   || '—'}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Legend */}
+      <div className="datewise-legend">
+        {Object.entries(STATUS_BADGE).map(([key, val]) => (
+          <span key={key} className="datewise-legend-item" style={{ color: val.color }}>
+            <span className="datewise-badge" style={{ color: val.color, background: val.bg }}>{val.label}</span>
+            {key.charAt(0).toUpperCase() + key.slice(1)}
+          </span>
+        ))}
+        <span className="datewise-legend-item" style={{ color: '#9ca3af' }}>
+          <span className="datewise-badge datewise-badge-none">—</span> Not Marked
+        </span>
+      </div>
+    </GlassCard>
+  );
+}
+
 // ── Main Admin Page ───────────────────────────────────────────────────────────
 
 export default function AdminPage() {
@@ -606,6 +733,7 @@ export default function AdminPage() {
 
       <div className="admin-grid">
         <AttendanceTablePanel />
+        <DateWiseAttendancePanel />
         <QrPanel />
         <AddInternSection />
         <InternListPanel />

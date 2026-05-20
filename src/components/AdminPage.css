@@ -750,3 +750,211 @@
 .admin-attendance-table tbody tr:last-child td {
   border-bottom: none;
 }
+
+/* ── Date-wise Attendance Table ── */
+.datewise-panel {
+  padding: 28px;
+}
+
+.datewise-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.datewise-filters label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.datewise-date-input {
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  color: #1a1a2e;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.datewise-date-input:focus {
+  border-color: rgba(79, 142, 247, 0.45);
+}
+
+.datewise-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+/* Pivot table */
+.datewise-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.datewise-th-date {
+  text-align: left;
+  padding: 10px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+.datewise-th-intern {
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  min-width: 64px;
+  max-width: 80px;
+}
+
+.datewise-intern-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f8ef7 0%, #2563eb 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 0 auto 4px;
+}
+
+.datewise-intern-name {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 72px;
+  text-transform: none;
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.datewise-th-summary {
+  text-align: center;
+  padding: 10px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  background: rgba(0, 0, 0, 0.03);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+}
+
+.datewise-row {
+  transition: background 0.15s;
+}
+.datewise-row:hover {
+  background: rgba(255, 255, 255, 0.65);
+}
+.datewise-row:last-child td {
+  border-bottom: none;
+}
+
+.datewise-td-date {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  position: sticky;
+  left: 0;
+  background: rgba(248, 250, 252, 0.9);
+  z-index: 1;
+}
+
+.datewise-td-status {
+  text-align: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.datewise-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.datewise-badge-none {
+  color: #d1d5db;
+  background: transparent;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.datewise-td-count {
+  text-align: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  font-size: 13px;
+  font-weight: 700;
+}
+.datewise-td-count.present-count { color: #10b981; }
+.datewise-td-count.absent-count  { color: #ef4444; }
+.datewise-td-count.leave-count   { color: #6366f1; }
+
+/* Legend */
+.datewise-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.datewise-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .admin-page {
+    padding: 20px 16px;
+  }
+  .datewise-filters {
+    gap: 8px;
+  }
+  .datewise-count {
+    margin-left: 0;
+  }
+}
+
