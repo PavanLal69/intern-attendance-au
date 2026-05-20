@@ -140,6 +140,7 @@ export function AppProvider({ children }) {
     if (code === 'auth/invalid-email') return 'Please enter a valid email address.';
     if (code === 'auth/user-not-found') return 'No account found for that email.';
     if (code === 'auth/wrong-password') return 'Incorrect password.';
+    if (code === 'auth/invalid-credential') return 'Incorrect email or password.';
     if (code === 'auth/email-already-in-use') return 'That email is already in use.';
     if (code === 'auth/weak-password') return 'Password should be at least 6 characters.';
     return err?.message || 'Authentication failed. Please try again.';
