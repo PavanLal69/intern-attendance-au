@@ -4,8 +4,6 @@ import './Sidebar.css';
 
 const navItems = [
   { id: 'dashboard',  label: 'Dashboard',  icon: LayoutDashboard },
-  { id: 'attendance', label: 'Attendance',  icon: CalendarCheck },
-  { id: 'interns',    label: 'Interns',     icon: Users },
   { id: 'analytics',  label: 'Analytics',   icon: BarChart3 },
 ];
 
