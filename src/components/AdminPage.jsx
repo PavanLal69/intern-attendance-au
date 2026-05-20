@@ -509,7 +509,82 @@ function TaskAssignSection() {
     </GlassCard>
   );
 }
+// ── Attendance Table ──────────────────────────────────────────────────────────
 
+function AttendanceTablePanel() {
+  const { interns, getInternStats } = useApp();
+
+  return (
+    <GlassCard className="attendance-report-panel admin-full-row">
+      <div className="section-heading">
+        <div className="section-heading-icon">
+          <CalendarDays size={18} />
+        </div>
+        <div>
+          <h2 className="section-title">Intern Attendance Report</h2>
+          <p className="section-sub">Tabular view of all interns attendance metrics</p>
+        </div>
+      </div>
+      
+      {interns.length === 0 ? (
+        <div className="panel-empty" style={{ padding: '30px', textAlign: 'center' }}>
+          <p style={{ color: '#6b7280', fontSize: '14px' }}>No interns registered yet.</p>
+        </div>
+      ) : (
+        <div style={{ overflowX: 'auto', marginTop: '16px' }}>
+          <table className="admin-attendance-table">
+            <thead>
+              <tr>
+                <th style={{ textAlign: 'left' }}>Intern Name</th>
+                <th style={{ textAlign: 'left' }}>Department</th>
+                <th>Total Days</th>
+                <th>Present</th>
+                <th>Late</th>
+                <th>Absent</th>
+                <th>Leave</th>
+                <th>Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              {interns.map((intern) => {
+                const stats = getInternStats(intern.id);
+                return (
+                  <tr key={intern.id}>
+                    <td>
+                      <div className="intern-cell-name">
+                        <div className="intern-avatar-sm" style={{ width: '28px', height: '28px', fontSize: '11px' }}>
+                          {intern.name.charAt(0).toUpperCase()}
+                        </div>
+                        <span className="intern-name-text">{intern.name}</span>
+                      </div>
+                    </td>
+                    <td className="intern-dept-text">{intern.department}</td>
+                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{stats.total}</td>
+                    <td style={{ textAlign: 'center', color: '#10b981', fontWeight: '600' }}>{stats.present}</td>
+                    <td style={{ textAlign: 'center', color: '#f59e0b', fontWeight: '600' }}>{stats.late}</td>
+                    <td style={{ textAlign: 'center', color: '#ef4444', fontWeight: '600' }}>{stats.absent}</td>
+                    <td style={{ textAlign: 'center', color: '#6366f1', fontWeight: '600' }}>{stats.leave}</td>
+                    <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                      <span style={{ 
+                        padding: '3px 8px', 
+                        borderRadius: '12px', 
+                        backgroundColor: stats.attendanceRate >= 80 ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)',
+                        color: stats.attendanceRate >= 80 ? '#059669' : '#b45309',
+                        fontSize: '12px'
+                      }}>
+                        {stats.attendanceRate}%
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </GlassCard>
+  );
+}
 // ── Main Admin Page ───────────────────────────────────────────────────────────
 
 export default function AdminPage() {
@@ -532,6 +607,7 @@ export default function AdminPage() {
       </div>
 
       <div className="admin-grid">
+        <AttendanceTablePanel />
         <QrPanel />
         <AddInternSection />
         <InternListPanel />
