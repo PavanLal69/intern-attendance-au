@@ -1,10 +1,13 @@
-import { LayoutDashboard, CalendarCheck, Users, BarChart3, ShieldCheck, GraduationCap, X } from 'lucide-react';
+import { LayoutDashboard, CalendarCheck, Users, BarChart3, ShieldCheck, GraduationCap, X, ClipboardList, QrCode } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import './Sidebar.css';
 
 const navItems = [
-  { id: 'dashboard',  label: 'Dashboard',  icon: LayoutDashboard },
-  { id: 'analytics',  label: 'Analytics',   icon: BarChart3 },
+  { id: 'dashboard',  label: 'Dashboard',   icon: LayoutDashboard },
+  { id: 'attendance', label: 'Attendance',   icon: ClipboardList },
+  { id: 'interns',    label: 'Interns',      icon: Users },
+  { id: 'analytics',  label: 'Analytics',    icon: BarChart3 },
+  { id: 'scan',       label: 'Scan QR Code', icon: QrCode },
 ];
 
 const adminItems = [
