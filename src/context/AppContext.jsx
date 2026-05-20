@@ -41,6 +41,7 @@ export function AppProvider({ children }) {
   const [userRole, setUserRole] = useState(null);
   const [currentInternId, setCurrentInternId] = useState(null);
   const [hasAdminAccount, setHasAdminAccount] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // -- Live data subscriptions ---------------------------------------------
 
@@ -436,6 +437,7 @@ export function AppProvider({ children }) {
       adminEmail: authUser?.email || '',
       registerIntern, loginIntern, logoutIntern, currentIntern,
       isInternLoggedIn: !!authUser && userRole === 'intern',
+      mobileSidebarOpen, setMobileSidebarOpen,
     }}>
       {children}
     </AppContext.Provider>

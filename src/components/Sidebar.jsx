@@ -1,4 +1,4 @@
-import { LayoutDashboard, CalendarCheck, Users, BarChart3, ShieldCheck, GraduationCap } from 'lucide-react';
+import { LayoutDashboard, CalendarCheck, Users, BarChart3, ShieldCheck, GraduationCap, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import './Sidebar.css';
 
@@ -16,10 +16,15 @@ const portalItems = [
 ];
 
 export default function Sidebar() {
-  const { activeView, setActiveView } = useApp();
+  const { activeView, setActiveView, mobileSidebarOpen, setMobileSidebarOpen } = useApp();
+
+  const handleNavClick = (viewId) => {
+    setActiveView(viewId);
+    setMobileSidebarOpen(false);
+  };
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${mobileSidebarOpen ? 'open' : ''}`}>
       <div className="sidebar-logo">
         <div className="logo-icon">
           <CalendarCheck size={22} />
@@ -28,6 +33,11 @@ export default function Sidebar() {
           <span className="logo-title">AttendTrack</span>
           <span className="logo-sub">Intern Monitor</span>
         </div>
+        {mobileSidebarOpen && (
+          <button className="sidebar-close-btn" onClick={() => setMobileSidebarOpen(false)} aria-label="Close menu">
+            <X size={20} />
+          </button>
+        )}
       </div>
 
       <nav className="sidebar-nav">
@@ -35,7 +45,7 @@ export default function Sidebar() {
           <button
             key={id}
             className={`nav-item ${activeView === id ? 'active' : ''}`}
-            onClick={() => setActiveView(id)}
+            onClick={() => handleNavClick(id)}
           >
             <Icon size={18} />
             <span>{label}</span>
@@ -48,7 +58,7 @@ export default function Sidebar() {
           <button
             key={id}
             className={`nav-item ${activeView === id ? 'active' : ''}`}
-            onClick={() => setActiveView(id)}
+            onClick={() => handleNavClick(id)}
           >
             <Icon size={18} />
             <span>{label}</span>
@@ -61,7 +71,7 @@ export default function Sidebar() {
           <button
             key={id}
             className={`nav-item portal-item ${activeView === id ? 'active' : ''}`}
-            onClick={() => setActiveView(id)}
+            onClick={() => handleNavClick(id)}
           >
             <Icon size={18} />
             <span>{label}</span>
