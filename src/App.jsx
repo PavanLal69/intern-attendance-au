@@ -13,14 +13,17 @@ import InternDashboard from './components/InternDashboard';
 import './App.css';
 
 const VIEW_TITLES = {
-  dashboard: 'Dashboard',
-  attendance: 'Mark Attendance',
-  interns: 'Interns List',
-  analytics: 'Analytics',
-  scan: 'Scan QR Code',
-  admin: 'Admin Panel',
+  dashboard:       'Dashboard',
+  attendance:      'Mark Attendance',
+  interns:         'Interns List',
+  analytics:       'Analytics',
+  scan:            'Scan QR Code',
+  admin:           'Admin Panel',
   'intern-portal': 'Intern Portal',
 };
+
+// Views that require admin login
+const ADMIN_VIEWS = new Set(['dashboard', 'attendance', 'interns', 'analytics']);
 
 function MobileHeader({ title, onMenuClick }) {
   return (
@@ -46,7 +49,7 @@ function AppShell() {
 
   const title = VIEW_TITLES[activeView] || 'AttendTrack';
 
-  // ── Intern portal: aligned with main layout ─────────────────────────────
+  // ── Intern portal ─────────────────────────────────────────────────────────
   if (activeView === 'intern-portal') {
     const showSidebar = isInternLoggedIn && !!currentIntern;
     return (
@@ -67,7 +70,26 @@ function AppShell() {
     );
   }
 
-  // ── Admin view: full-screen login gate ──────────────────────────────────
+  // ── Scan QR — requires intern login ──────────────────────────────────────
+  if (activeView === 'scan') {
+    const showSidebar = isInternLoggedIn && !!currentIntern;
+    return (
+      <div className="app-layout">
+        {showSidebar && mobileSidebarOpen && (
+          <div className="sidebar-backdrop" onClick={() => setMobileSidebarOpen(false)} />
+        )}
+        {showSidebar && <Sidebar />}
+        <main className="main-content" style={{ marginLeft: showSidebar ? undefined : 0 }}>
+          {showSidebar && (
+            <MobileHeader title={title} onMenuClick={() => setMobileSidebarOpen(true)} />
+          )}
+          {isInternLoggedIn && currentIntern ? <ScanPage /> : <InternLogin />}
+        </main>
+      </div>
+    );
+  }
+
+  // ── Admin panel ───────────────────────────────────────────────────────────
   if (activeView === 'admin') {
     return (
       <div className="app-layout">
@@ -85,20 +107,41 @@ function AppShell() {
     );
   }
 
-  // ── Normal views with sidebar ───────────────────────────────────────────
+  // ── Admin-protected views (Dashboard / Attendance / Interns / Analytics) ──
+  if (ADMIN_VIEWS.has(activeView)) {
+    if (!isAdminLoggedIn) {
+      // Not logged in — show admin login gate
+      return (
+        <div className="app-layout">
+          <main className="main-content" style={{ marginLeft: 0 }}>
+            <AdminLogin />
+          </main>
+        </div>
+      );
+    }
+
+    return (
+      <div className="app-layout">
+        {mobileSidebarOpen && (
+          <div className="sidebar-backdrop" onClick={() => setMobileSidebarOpen(false)} />
+        )}
+        <Sidebar />
+        <main className="main-content">
+          <MobileHeader title={title} onMenuClick={() => setMobileSidebarOpen(true)} />
+          {activeView === 'dashboard'  && <Dashboard />}
+          {activeView === 'attendance' && <AttendancePage />}
+          {activeView === 'interns'    && <InternsPage />}
+          {activeView === 'analytics'  && <AnalyticsPage />}
+        </main>
+      </div>
+    );
+  }
+
+  // Fallback — show admin login
   return (
     <div className="app-layout">
-      {mobileSidebarOpen && (
-        <div className="sidebar-backdrop" onClick={() => setMobileSidebarOpen(false)} />
-      )}
-      <Sidebar />
-      <main className="main-content">
-        <MobileHeader title={title} onMenuClick={() => setMobileSidebarOpen(true)} />
-        {activeView === 'dashboard'  && <Dashboard />}
-        {activeView === 'attendance' && <AttendancePage />}
-        {activeView === 'interns'    && <InternsPage />}
-        {activeView === 'analytics'  && <AnalyticsPage />}
-        {activeView === 'scan'       && <ScanPage />}
+      <main className="main-content" style={{ marginLeft: 0 }}>
+        <AdminLogin />
       </main>
     </div>
   );
@@ -111,4 +154,3 @@ export default function App() {
     </AppProvider>
   );
 }
-
