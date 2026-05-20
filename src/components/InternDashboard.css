@@ -62,7 +62,7 @@
 /* ── Stats Grid ── */
 .id-stats-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -254,7 +254,7 @@
 
 /* ── Responsive ── */
 @media (max-width: 1100px) {
-  .id-stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .id-stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 800px) {
   .id-mid-grid { grid-template-columns: 1fr; }

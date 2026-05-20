@@ -539,7 +539,6 @@ function AttendanceTablePanel() {
                 <th style={{ textAlign: 'left' }}>Department</th>
                 <th>Total Days</th>
                 <th>Present</th>
-                <th>Late</th>
                 <th>Absent</th>
                 <th>Leave</th>
                 <th>Rate</th>
@@ -561,7 +560,6 @@ function AttendanceTablePanel() {
                     <td className="intern-dept-text">{intern.department}</td>
                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{stats.total}</td>
                     <td style={{ textAlign: 'center', color: '#10b981', fontWeight: '600' }}>{stats.present}</td>
-                    <td style={{ textAlign: 'center', color: '#f59e0b', fontWeight: '600' }}>{stats.late}</td>
                     <td style={{ textAlign: 'center', color: '#ef4444', fontWeight: '600' }}>{stats.absent}</td>
                     <td style={{ textAlign: 'center', color: '#6366f1', fontWeight: '600' }}>{stats.leave}</td>
                     <td style={{ textAlign: 'center', fontWeight: 'bold' }}>

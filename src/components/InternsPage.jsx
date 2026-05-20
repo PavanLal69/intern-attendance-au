@@ -189,7 +189,6 @@ function InternCard({ intern }) {
         <div className="intern-card-actions">
           <div className="mini-stats">
             <span className="mini-stat present">{stats.present}P</span>
-            <span className="mini-stat late">{stats.late}L</span>
             <span className="mini-stat absent">{stats.absent}A</span>
             <span className="rate-badge">{stats.attendanceRate}%</span>
           </div>

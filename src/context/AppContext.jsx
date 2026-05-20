@@ -211,19 +211,18 @@ export function AppProvider({ children }) {
   );
 
   const getInternStats = useCallback((internId) => {
-    let present = 0, absent = 0, late = 0, leave = 0, total = 0;
+    let present = 0, absent = 0, leave = 0, total = 0;
     Object.values(attendance).forEach((day) => {
       if (day[internId]) {
         total++;
         const s = day[internId];
         if (s === 'present') present++;
         else if (s === 'absent') absent++;
-        else if (s === 'late') late++;
         else if (s === 'leave') leave++;
       }
     });
-    const attendanceRate = total > 0 ? Math.round(((present + late) / total) * 100) : 0;
-    return { present, absent, late, leave, total, attendanceRate };
+    const attendanceRate = total > 0 ? Math.round((present / total) * 100) : 0;
+    return { present, absent, leave, total, attendanceRate };
   }, [attendance]);
 
   // Returns last N days of attendance for an intern as chart data
@@ -233,7 +232,7 @@ export function AppProvider({ children }) {
     return recent.map((date) => ({
       date: new Date(date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
       status: attendance[date]?.[internId] || null,
-      present: attendance[date]?.[internId] === 'present' || attendance[date]?.[internId] === 'late' ? 1 : 0,
+      present: attendance[date]?.[internId] === 'present' ? 1 : 0,
     }));
   }, [attendance]);
 
@@ -245,16 +244,15 @@ export function AppProvider({ children }) {
   const getTodaySummary = useCallback(() => {
     const today = getTodayKey();
     const todayRecord = attendance[today] || {};
-    let present = 0, absent = 0, late = 0, leave = 0, unmarked = 0;
+    let present = 0, absent = 0, leave = 0, unmarked = 0;
     interns.forEach((intern) => {
       const s = todayRecord[intern.id];
       if (!s) unmarked++;
       else if (s === 'present') present++;
       else if (s === 'absent') absent++;
-      else if (s === 'late') late++;
       else if (s === 'leave') leave++;
     });
-    return { present, absent, late, leave, unmarked, total: interns.length };
+    return { present, absent, leave, unmarked, total: interns.length };
   }, [attendance, interns]);
 
   // -- QR Tokens ------------------------------------------------------------

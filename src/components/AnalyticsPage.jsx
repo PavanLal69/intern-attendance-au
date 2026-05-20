@@ -20,7 +20,6 @@ import './AnalyticsPage.css';
 
 const STATUS_COLORS = {
   present: '#10b981',
-  late: '#f59e0b',
   absent: '#ef4444',
   leave: '#8b5cf6',
 };
@@ -31,7 +30,6 @@ function InternBarChart({ interns, getInternStats }) {
     return {
       name: intern.name.split(' ')[0],
       Present: stats.present,
-      Late: stats.late,
       Absent: stats.absent,
       Leave: stats.leave,
       Rate: stats.attendanceRate,
@@ -56,29 +54,24 @@ function InternBarChart({ interns, getInternStats }) {
         />
         <Legend />
         <Bar dataKey="Present" fill={STATUS_COLORS.present} radius={[4, 4, 0, 0]} />
-        <Bar dataKey="Late" fill={STATUS_COLORS.late} radius={[4, 4, 0, 0]} />
-        <Bar dataKey="Absent" fill={STATUS_COLORS.absent} radius={[4, 4, 0, 0]} />
-        <Bar dataKey="Leave" fill={STATUS_COLORS.leave} radius={[4, 4, 0, 0]} />
-      </BarChart>
-    </ResponsiveContainer>
-  );
-}
-
-function OverallPieChart({ interns, getInternStats }) {
-  let present = 0, late = 0, absent = 0, leave = 0;
-  interns.forEach((intern) => {
-    const s = getInternStats(intern.id);
-    present += s.present;
-    late += s.late;
-    absent += s.absent;
-    leave += s.leave;
-  });
-
-  const data = [
-    { name: 'Present', value: present, color: STATUS_COLORS.present },
-    { name: 'Late', value: late, color: STATUS_COLORS.late },
-    { name: 'Absent', value: absent, color: STATUS_COLORS.absent },
-    { name: 'Leave', value: leave, color: STATUS_COLORS.leave },
+          <Bar dataKey="Absent" fill={STATUS_COLORS.absent} radius={[4, 4, 0, 0]} />
+          <Bar dataKey="Leave" fill={STATUS_COLORS.leave} radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    );
+  }
+  
+  function OverallPieChart({ interns, getInternStats }) {
+    let present = 0, absent = 0, leave = 0;
+    interns.forEach((intern) => {
+      const s = getInternStats(intern.id);
+      present += s.present;
+      absent += s.absent;
+      leave += s.leave;
+    });
+  
+    const data = [
+      { name: 'Present', value: present, color: STATUS_COLORS.present },
   ].filter((d) => d.value > 0);
 
   if (data.length === 0) return (
@@ -124,7 +117,7 @@ function AttendanceTrendChart({ attendance, interns }) {
     interns.forEach((intern) => {
       if (dayRecord[intern.id]) {
         total++;
-        if (dayRecord[intern.id] === 'present' || dayRecord[intern.id] === 'late') {
+        if (dayRecord[intern.id] === 'present') {
           present++;
         }
       }
@@ -207,17 +200,16 @@ export default function AnalyticsPage() {
   const { interns, attendance, getInternStats } = useApp();
 
   // Overall totals
-  let totalPresent = 0, totalAbsent = 0, totalLate = 0, totalLeave = 0;
+  let totalPresent = 0, totalAbsent = 0, totalLeave = 0;
   interns.forEach((intern) => {
     const s = getInternStats(intern.id);
     totalPresent += s.present;
     totalAbsent += s.absent;
-    totalLate += s.late;
     totalLeave += s.leave;
   });
-  const totalRecords = totalPresent + totalAbsent + totalLate + totalLeave;
+  const totalRecords = totalPresent + totalAbsent + totalLeave;
   const overallRate = totalRecords > 0
-    ? Math.round(((totalPresent + totalLate) / totalRecords) * 100)
+    ? Math.round((totalPresent / totalRecords) * 100)
     : 0;
 
   return (
@@ -237,10 +229,6 @@ export default function AnalyticsPage() {
         <GlassCard className="analytics-stat-card">
           <p className="analytics-stat-label">Total Present</p>
           <p className="analytics-stat-value" style={{ color: '#10b981' }}>{totalPresent}</p>
-        </GlassCard>
-        <GlassCard className="analytics-stat-card">
-          <p className="analytics-stat-label">Total Late</p>
-          <p className="analytics-stat-value" style={{ color: '#f59e0b' }}>{totalLate}</p>
         </GlassCard>
         <GlassCard className="analytics-stat-card">
           <p className="analytics-stat-label">Total Absent</p>

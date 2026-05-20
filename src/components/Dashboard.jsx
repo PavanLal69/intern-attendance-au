@@ -32,13 +32,6 @@ export default function Dashboard() {
       color: '#ef4444',
       bgColor: 'rgba(239, 68, 68, 0.1)',
     },
-    {
-      label: 'Late Today',
-      value: summary.late,
-      icon: Clock,
-      color: '#f59e0b',
-      bgColor: 'rgba(245, 158, 11, 0.1)',
-    },
   ];
 
   return (
@@ -121,10 +114,7 @@ export default function Dashboard() {
                       {summary.present}
                     </span>
                   </div>
-                  <div className="summary-stat">
-                    <span className="summary-stat-label">Late</span>
-                    <span className="summary-stat-value late">{summary.late}</span>
-                  </div>
+
                   <div className="summary-stat">
                     <span className="summary-stat-label">Absent</span>
                     <span className="summary-stat-value absent">

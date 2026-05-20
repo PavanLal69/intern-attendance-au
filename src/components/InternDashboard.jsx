@@ -43,7 +43,6 @@ function AttendanceChart({ internId }) {
 
   const STATUS_COLOR = {
     present: '#10b981',
-    late:    '#f59e0b',
     absent:  '#ef4444',
     leave:   '#8b5cf6',
   };
@@ -57,7 +56,7 @@ function AttendanceChart({ internId }) {
     );
   }
 
-  // Convert to numeric for bar: 1 = present/late, 0 = absent/leave/null
+  // Convert to numeric for bar: 1 = present, 0 = absent/leave/null
   const data = history.map((h) => ({
     date: h.date,
     value: h.present,
@@ -182,7 +181,6 @@ export default function InternDashboard() {
       {/* ── Attendance Stats ── */}
       <div className="id-stats-grid">
         <StatCard label="Present"  value={stats.present}        icon={CheckCircle2} color="#10b981" bg="rgba(16,185,129,0.1)" />
-        <StatCard label="Late"     value={stats.late}           icon={Clock3}       color="#f59e0b" bg="rgba(245,158,11,0.1)" />
         <StatCard label="Absent"   value={stats.absent}         icon={XCircle}      color="#ef4444" bg="rgba(239,68,68,0.1)"  />
         <StatCard label="Leave"    value={stats.leave}          icon={Umbrella}     color="#8b5cf6" bg="rgba(139,92,246,0.1)" />
         <StatCard label="Attendance Rate" value={`${stats.attendanceRate}%`} icon={TrendingUp} color="#2563eb" bg="rgba(37,99,235,0.1)" />
@@ -194,7 +192,7 @@ export default function InternDashboard() {
           <h2 className="id-section-title">Attendance History <span>(last 14 days)</span></h2>
           <AttendanceChart internId={currentIntern.id} />
           <div className="id-chart-legend">
-            {[['#10b981','Present'],['#f59e0b','Late'],['#ef4444','Absent'],['#8b5cf6','Leave'],['#e5e7eb','No record']].map(([c,l]) => (
+            {[['#10b981','Present'],['#ef4444','Absent'],['#8b5cf6','Leave'],['#e5e7eb','No record']].map(([c,l]) => (
               <span key={l} className="id-legend-item">
                 <span className="id-legend-dot" style={{ background: c }} />{l}
               </span>
@@ -219,7 +217,7 @@ export default function InternDashboard() {
           <div className="id-summary-rows">
             {[
               { label: 'Total Days Recorded', value: stats.total,        color: '#6366f1' },
-              { label: 'Present + Late',       value: stats.present + stats.late, color: '#10b981' },
+              { label: 'Present',              value: stats.present,     color: '#10b981' },
               { label: 'Absent',               value: stats.absent,      color: '#ef4444' },
               { label: 'Leave',                value: stats.leave,       color: '#8b5cf6' },
             ].map((r) => (

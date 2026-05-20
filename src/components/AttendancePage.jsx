@@ -7,7 +7,6 @@ import './AttendancePage.css';
 
 const STATUS_CONFIG = {
   present: { label: 'Present', icon: CheckCircle, color: '#10b981', bg: 'rgba(16,185,129,0.1)' },
-  late: { label: 'Late', icon: Clock, color: '#f59e0b', bg: 'rgba(245,158,11,0.1)' },
   absent: { label: 'Absent', icon: XCircle, color: '#ef4444', bg: 'rgba(239,68,68,0.1)' },
   leave: { label: 'Leave', icon: Umbrella, color: '#8b5cf6', bg: 'rgba(139,92,246,0.1)' },
 };
