@@ -3,7 +3,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } f
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBZOWLNMGTgeUMCPe_aWQwZybtvF90Njw4",
+  apiKey: "AIzaSyBZOwLNMGTgeUMCPe_aW0wZybtvF90Njw4",
   authDomain: "intern-attendance-3757e.firebaseapp.com",
   projectId: "intern-attendance-3757e"
 };
